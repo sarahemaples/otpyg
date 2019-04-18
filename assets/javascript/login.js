@@ -10,38 +10,80 @@ var config = {
 
   firebase.initializeApp(config);
 
-// Initialize the FirebaseUI Widget using Firebase.
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  // Declaring some globals
+  var database = firebase.database();
+  var latestSearch;
+  var favorites = [];
 
-  // Firebase UI setup
-  ui.start('#firebaseui-auth-container', {
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID
-    ],
-    // Other config options...
-  });
 
-  var uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-        // User successfully signed in.
-        // Return type determines whether we continue the redirect automatically
-        // or whether we leave that to developer to handle.
-        return true;
-      }
-    },
-    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'redirect',
-    signInSuccessUrl: "https://www.google.com",
-    signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ]
-  };
 
-// The start method will wait until the DOM is loaded.
-ui.start('#firebaseui-auth-container', uiConfig);
+  // Initialize Providers
+  var google = new firebase.auth.GoogleAuthProvider();
+
+
+  $("#login-button").on("click",(e) => {
+    e.preventDefault();
+    firebase.auth().signInWithPopup(google).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        $("#login-button").remove();
+        console.log(user);
+        // database logging
+        database.ref(user.uid).set({
+            name: user.displayName,
+            email: user.email,
+            favorites: "Add a Favorite Location!"
+        })
+
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+
+  })
+
+
+  $("#fave-button").on("click", (event) => {
+    event.preventDefault();
+    latestSearch = $("#fd").val();
+    favorites.push(latestSearch);
+    console.log(latestSearch);
+    var user = firebase.auth().currentUser;
+    console.log(user.uid);
+    //logging it onto the database
+    database.ref(`${user.uid}/favorites`).push(latestSearch);
+    for (var i = 0; i < favorites.length; i++) {
+        if(favorites[favorites.length-1]) {
+            var buttonsHTML = "<button class='dynamic' id = '" + (favorites.length-1) + "'onclick='populate($(this))'>" + latestSearch + "</button>"
+            $("#buttons-2").append(buttonsHTML);
+            return;
+        }
+    }
+  
+})
+
+function populate (val) {
+    for(var i = 0; i < favorites.length; i++) {
+        if (val.attr("id") == i){
+            console.log(favorites[i]);
+            $("#fd").val(favorites[i]);
+        }
+    }
+}
+
+console.log("test37");
+
+
+
+
+
+
+

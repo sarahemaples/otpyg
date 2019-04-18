@@ -2,30 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TweetMap</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    
 </head>
+
 <body>
 
-<h1>Welcome to TweetMap!</h1>
-<div id = "firebaseui-auth-container" class = "container"></div>
+<div class="container" id="main">
+
+<!--header-->
+
+    <div class="row" id= "head">
+        <div class="col">
+            <img src= "assets/images/project1logo.png" id = "header">
+        </div>
+    </div>
+
+ 
+<div id="main-container" class="mcontainer">
+
+<!--search bar and buttons-->
+
+<div class="row mt-2" id="submission">
+
+        <div class="col">
+
+            <p><input type="text" name="address" placeholder= "Enter a location" id="fd"></p>
+
+                <div class="input-group-append" id="buttons">
+
+                    <button type="submit" class="btn btn-primary m-2" id="login-button"><img src = "assets/images/loginbutton.png"></button>
+                    <button type="submit" class="btn btn-primary m-2" id="fave-button"><img src = "assets/images/favebutton.png"></button>
+
+
+                </div>
+
+                <div class="input-group-append" id="buttons-2"></div>
+ 
+        </div>
+
+    </div>
+                
+            
+<!--map and tweets-->
+
+
+    <div class= "row mt-2" id="mapntweet">
+
+            
+        <div class="maphere" id="map"></div>
+
+            <div class="scroll" id= "scroll">
+                               
+                    <div class="tweetshere" id="tweets">
+                            
+                        <section class="main-section" id="intro">
+                            
+                                        <h1>So long, Yelp.</h1>
+                                  
+                                        <img src="assets/images/bird.png" id ="bird">
+                                  
+                                        <p>We know you. You’re no relic- you’re modern, you know all the slang- well, maybe you don’t know ALL the slang, but you DO know that the best feedback isn’t found in stuffy old resturant reviews. It comes straight from the horse’s beak.
+
+                                        <p>OTPYG is an app dedicated to finding you the real news- just type in a location, and find Tweets from people in the area. The real stuff- impromptu events, uncensored customers, funny 
+                                        stories. Use Google to login and we can save favorite locations for you. But we know you. You don’t need us to tell you the smart choice. So what are you waiting for?</p>
+                                  
+                        </section>
+
+                  </div>
+                
+            </div>
+     
+    </div>
+
+<!--final div-->
+
+</div>
+
+</div>
 
 
 
 
-
-    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
-    <script type="text/javascript" src="assets/javascript/login.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="assets/tweetie/dist/tweetie.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQNp3HoptPePZ74RNj9eEgug2kEqBbY-s&callback=initMap&libraries=places" async defer></script>
+<script src="assets/javascript/login.js"></script>
+<script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>
